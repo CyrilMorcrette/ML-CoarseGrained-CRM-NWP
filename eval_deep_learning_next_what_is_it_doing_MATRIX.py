@@ -69,37 +69,9 @@ model6f.load_weights('expt168/expt_f/ml_lastest_saved_weights.h5')
 
 lev=setup['k_indices']
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 in_perturb_zero   =np.zeros([25,110])
 
-#Deal with stupid way python does pointers when you think it ought to do a copy!
+# Make sure we do a copy
 in_perturb_theta=np.copy(in_perturb_zero)
 in_perturb_q    =np.copy(in_perturb_zero)
 
@@ -108,7 +80,6 @@ delta_q=delta_theta
 for i in np.arange(0,25):
     in_perturb_theta[i,i+50]  =delta_theta
     in_perturb_q    [i,i+75]  =delta_q
-
 
 #i=0
 #in_perturb_theta[i,i+50]=delta_theta
@@ -122,9 +93,6 @@ for i in np.arange(0,25):
 #in_perturb_q    [i,i+75]=delta_q
 #in_perturb_q    [i,i+75-1]=delta_q
 
-
-
-
 cmax=delta_theta
 if 1==1:
     cmap = plt.get_cmap('bwr')   
@@ -134,13 +102,9 @@ if 1==1:
     im=axs[1,0].pcolormesh(np.transpose(in_perturb_zero),vmin=-cmax,vmax=cmax,cmap=cmap)
     plt.show()
 
-
-
-
 filein='../matlab/standard_atm_p_on_l70_levels_1_to_50.dat'
 p_on_lev=np.loadtxt(filein, delimiter=",")
 p_on_lev=p_on_lev[lev]
-
 
 out2a_perturb_theta=model2a.predict(in_perturb_theta)
 out2a_perturb_q    =model2a.predict(in_perturb_q    )
@@ -165,20 +129,9 @@ out2_perturb_theta=(out2a_perturb_theta+out2b_perturb_theta+out2c_perturb_theta+
 out2_perturb_q    =(out2a_perturb_q+out2b_perturb_q+out2c_perturb_q+out2d_perturb_q+out2e_perturb_q+out2f_perturb_q)/6.0
 out2_perturb_zero =(out2a_perturb_zero+out2b_perturb_zero+out2c_perturb_zero+out2d_perturb_zero+out2e_perturb_zero+out2f_perturb_zero)/6.0
 
-
-
-
-
-
-
-
-
-
 cmax=delta_theta*0.2
 
-
 %cmax=delta_theta
-
 
 if 1==1:
     fig, axs = plt.subplots(2, 2)
@@ -215,8 +168,6 @@ if 1==1:
     im=axs[1,1].set_ylabel('p_out [hPa]')
     im=axs[1,1].set_title('d) q response to q')
     plt.show()
-
-
 
 out4a_perturb_theta=model4a.predict(in_perturb_theta)
 out4a_perturb_q    =model4a.predict(in_perturb_q    )
@@ -391,18 +342,3 @@ if 1==1:
     im=axs[1,1].set_ylabel('p_out [hPa]')
     im=axs[1,1].set_title('d) q response to q')
     plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
