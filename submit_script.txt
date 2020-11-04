@@ -1,0 +1,75 @@
+path=$(pwd)
+name=$(basename $path)
+mkdir expt_a
+mkdir expt_b
+mkdir expt_c
+mkdir expt_d
+mkdir expt_e
+mkdir expt_f
+
+cp ../deep_learning_coarse_grained_crm_MASTERCOPY.py expt_a/deep_learning_coarse_grained_crm_FOR_RUNNING.py
+cp ../deep_learning_coarse_grained_crm_MASTERCOPY.py expt_b/deep_learning_coarse_grained_crm_FOR_RUNNING.py
+cp ../deep_learning_coarse_grained_crm_MASTERCOPY.py expt_c/deep_learning_coarse_grained_crm_FOR_RUNNING.py
+cp ../deep_learning_coarse_grained_crm_MASTERCOPY.py expt_d/deep_learning_coarse_grained_crm_FOR_RUNNING.py
+cp ../deep_learning_coarse_grained_crm_MASTERCOPY.py expt_e/deep_learning_coarse_grained_crm_FOR_RUNNING.py
+cp ../deep_learning_coarse_grained_crm_MASTERCOPY.py expt_f/deep_learning_coarse_grained_crm_FOR_RUNNING.py
+
+cp ../ml_cjm_functions_MASTERCOPY.py expt_a/ml_cjm_functions.py
+cp ../ml_cjm_functions_MASTERCOPY.py expt_b/ml_cjm_functions.py
+cp ../ml_cjm_functions_MASTERCOPY.py expt_c/ml_cjm_functions.py
+cp ../ml_cjm_functions_MASTERCOPY.py expt_d/ml_cjm_functions.py
+cp ../ml_cjm_functions_MASTERCOPY.py expt_e/ml_cjm_functions.py
+cp ../ml_cjm_functions_MASTERCOPY.py expt_f/ml_cjm_functions.py
+
+cp ml_namelist.py expt_a/
+cp ml_namelist.py expt_b/
+cp ml_namelist.py expt_c/
+cp ml_namelist.py expt_d/
+cp ml_namelist.py expt_e/
+cp ml_namelist.py expt_f/
+
+sed -i "s/months_to_train_on=\[0,1,2,3,4,5\]/months_to_train_on=\[1,2,3,4,5\]/g" expt_a/ml_namelist.py
+sed -i "s/months_to_train_on=\[0,1,2,3,4,5\]/months_to_train_on=\[0,2,3,4,5\]/g" expt_b/ml_namelist.py
+sed -i "s/months_to_train_on=\[0,1,2,3,4,5\]/months_to_train_on=\[0,1,3,4,5\]/g" expt_c/ml_namelist.py
+sed -i "s/months_to_train_on=\[0,1,2,3,4,5\]/months_to_train_on=\[0,1,2,4,5\]/g" expt_d/ml_namelist.py
+sed -i "s/months_to_train_on=\[0,1,2,3,4,5\]/months_to_train_on=\[0,1,2,3,5\]/g" expt_e/ml_namelist.py
+sed -i "s/months_to_train_on=\[0,1,2,3,4,5\]/months_to_train_on=\[0,1,2,3,4\]/g" expt_f/ml_namelist.py
+
+cp ../run_ml_on_spice.sh expt_a/$name-a-run_ml_on_spice.sh
+cp ../run_ml_on_spice.sh expt_b/$name-b-run_ml_on_spice.sh
+cp ../run_ml_on_spice.sh expt_c/$name-c-run_ml_on_spice.sh
+cp ../run_ml_on_spice.sh expt_d/$name-d-run_ml_on_spice.sh
+cp ../run_ml_on_spice.sh expt_e/$name-e-run_ml_on_spice.sh
+cp ../run_ml_on_spice.sh expt_f/$name-f-run_ml_on_spice.sh
+
+sed -i "s&exptXXX&$name/expt_a&g" expt_a/$name-a-run_ml_on_spice.sh
+sed -i "s&exptXXX&$name/expt_b&g" expt_b/$name-b-run_ml_on_spice.sh
+sed -i "s&exptXXX&$name/expt_c&g" expt_c/$name-c-run_ml_on_spice.sh
+sed -i "s&exptXXX&$name/expt_d&g" expt_d/$name-d-run_ml_on_spice.sh
+sed -i "s&exptXXX&$name/expt_e&g" expt_e/$name-e-run_ml_on_spice.sh
+sed -i "s&exptXXX&$name/expt_f&g" expt_f/$name-f-run_ml_on_spice.sh
+
+cd expt_a
+sbatch $name-a-run_ml_on_spice.sh
+cd ..
+cd expt_b
+sbatch $name-b-run_ml_on_spice.sh
+cd ..
+cd expt_c
+sbatch $name-c-run_ml_on_spice.sh
+cd ..
+cd expt_d
+sbatch $name-d-run_ml_on_spice.sh
+cd ..
+cd expt_e
+sbatch $name-e-run_ml_on_spice.sh
+cd ..
+cd expt_f
+sbatch $name-f-run_ml_on_spice.sh
+cd ..
+
+
+
+########################################
+########################################
+#TO BE RUN FROM WITHIN EXPT DIRECTORY
