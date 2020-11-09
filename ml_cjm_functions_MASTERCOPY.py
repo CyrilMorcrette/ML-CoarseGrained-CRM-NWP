@@ -28,10 +28,16 @@ def read_in_for_one_subdomain(domain,date_range,regions_to_process,setup,monthye
     #      but they do contain data for all 99 regions, and for range of heights and for multiple days.
     nc_file   = '/data/nwp1/frme/ML/'+monthyear+'/'+date_range+'-ml_aggregate_data-subdomain'+str(domain)+'.nc'
     fh        = Dataset(nc_file, mode='r')
+    # Using original varibale names
     theta     = fh.variables['liquid_ice_static_potential_temperature_K'][:]
     theta_adv = fh.variables['adv_flux_thetali_Ks-1'][:]
     qt        = fh.variables['total_humidity_qvqclqcfqrainqgraupel_kgkg-1'][:]
     qt_adv    = fh.variables['adv_flux_qtotal_kgkg-1s-1'][:]
+    # Using netcdf compliant variable names
+    # theta     = fh.variables['liquid_ice_static_potential_temperature'][:]
+    # theta_adv = fh.variables['net_advective_flux_liquid_ice_static_potential_temperature'][:]
+    # qt        = fh.variables['total_specific_humidity'][:]
+    # qt_adv    = fh.variables['net_advective_flux_total_specific_humidity'][:]
     toa_sw    = fh.variables['toa_incoming_shortwave_flux'][:]
     shf       = fh.variables['surface_upward_sensible_heat_flux'][:]
     lhf       = fh.variables['surface_upward_latent_heat_flux'][:]
@@ -43,7 +49,7 @@ def read_in_for_one_subdomain(domain,date_range,regions_to_process,setup,monthye
     fh.close()
     #
     tmp1,tmp2,tmp3,nr=theta.shape
-    #print('theta.shape=',theta.shape)
+    #
     #Trim down data to lowest 50 of the 70 levels
     nz        = setup['nz_trim']
     theta     = theta[:,0:nz,:,:]
@@ -54,7 +60,6 @@ def read_in_for_one_subdomain(domain,date_range,regions_to_process,setup,monthye
     # Data has been output every 2 hours, so there are 12 data samples per day
     tsperday=12
     #Trim down data to first ndays days (so will work on all months apart fro February).
-    #ndays=30
     nt=(ndays-1)*tsperday
     shift=setup['shift']
     # Start reading in the data from tsperday-1, so effectively ignore whole 02Z-22Z of first day 
@@ -124,7 +129,6 @@ def read_in_for_one_subdomain(domain,date_range,regions_to_process,setup,monthye
     shf_before    = shf      [tsperday-2:(tsperday-1)+nt-1,:,:,regions_to_process]
     lhf_before    = lhf      [tsperday-2:(tsperday-1)+nt-1,:,:,regions_to_process]
     #
-    #
     theta_adv=theta_adv*(2.0*60.0*60.0)
     qt_adv=qt_adv*(2.0*60.0*60.0)
     # Calculate change over each time interval
@@ -171,8 +175,8 @@ def calc_profiles_mean_and_std(data):
     theta_std_prof = np.zeros([nz])
     qt_std_prof    = np.zeros([nz])
     # Also calculate profile of standard deviation for adv and phys increments (not sure this will be needed but let's try).
-    theta_adv_std_prof = np.zeros([nz])
-    qt_adv_std_prof    = np.zeros([nz])
+    theta_adv_std_prof  = np.zeros([nz])
+    qt_adv_std_prof     = np.zeros([nz])
     theta_phys_std_prof = np.zeros([nz])
     qt_phys_std_prof    = np.zeros([nz])
     # Unfold 2d array manually to make it clearer what is going on.
@@ -480,7 +484,6 @@ def extricate(setup,norms,data,i_flag_add_adv):
     nt,nz,tmp3,nr=data['theta_now'].shape
     #
     # Have option of only doing calculation every k_step levels
-    #k_step=2
     nz_to_use=nz/setup['k_step']
     tmp4=np.empty([int(6*nz_to_use)+11,nt*nr])
     k_indices=setup['k_indices']
@@ -778,7 +781,6 @@ def read_in_centile_profiles(date_range):
 
 def plot_centiles(datain,setup):
     # For plotting profiles to check how the normalisations have behaved.
-    #lev=np.arange(0,50,2)
     lev=setup['k_indices']
     fig, axs = plt.subplots(4, 2)
     axs[0, 0].plot(np.amax(datain[:,0:25],axis=0),lev)
