@@ -2,6 +2,8 @@
 #
 # Cyril Morcrette (2020), Met Office, UK
 #
+# For use in averaging profiles for use in normalisation/standardization
+#
 # Use "module load scitools/experimental-current" at the command line before running this.
 
 import numpy as np
