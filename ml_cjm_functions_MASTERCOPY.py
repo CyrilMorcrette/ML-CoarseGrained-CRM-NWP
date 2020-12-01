@@ -2,6 +2,8 @@
 #
 # Cyril Morcrette (2020), Met Office, UK
 #
+# Various functions used by other machine learning programs
+#
 # Use "module load scitools/experimental-current" at the command line before running this.
 
 # Import some modules
