@@ -2,6 +2,8 @@
 #
 # Cyril Morcrette (2020), Met Office, UK
 #
+# Code for recursive single column model evaluation
+#
 # Use "module load scitools/experimental-current" at the command line before running this.
 
 # Import some modules
