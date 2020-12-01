@@ -2,6 +2,8 @@
 #
 # Cyril Morcrette (2020), Met Office, UK
 #
+# Main code for carrying out training using a deep neural network.
+#
 # Use "module load scitools/experimental-current" at the command line before running this.
 ##################################################
 # Prior to running this, need to use:
